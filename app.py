@@ -7,6 +7,7 @@ models and age/sex reference curve from the app folder or Desktop/software.
 
 from __future__ import annotations
 
+import calendar
 import html
 import json
 import math
@@ -1677,6 +1678,10 @@ def configure_dark_experience() -> None:
             }
             [data-testid="stNumberInput"] button svg,
             [data-testid="stDateInput"] button svg { fill: currentColor !important; }
+            [data-testid="stNumberInput"] button:not(:disabled) svg,
+            [data-testid="stNumberInput"] button:not(:disabled) svg path {
+                color: #a5f3e7 !important; fill: #a5f3e7 !important;
+            }
             .stButton button[kind="primary"] p,
             .stFormSubmitButton button[kind="primaryFormSubmit"] p,
             .stButton button[data-testid="baseButton-primary"] p,
@@ -1695,7 +1700,7 @@ def configure_dark_experience() -> None:
             [class*="st-key-wizard_stage_"] { animation: npStepReveal 240ms ease-out both; }
             @media (max-width: 900px) {
                 .st-key-hero_shell [data-testid="stHorizontalBlock"] { flex-direction: column !important; }
-                .st-key-hero_shell [data-testid="column"] { width: 100% !important; min-width: 0 !important; flex: 1 1 auto !important; }
+                .st-key-hero_shell [data-testid="stColumn"] { width: 100% !important; min-width: 0 !important; flex: 1 1 auto !important; }
                 .np-logo-stage { width: min(60vw, 270px); }
             }
             @media (max-width: 700px) {
@@ -1705,7 +1710,7 @@ def configure_dark_experience() -> None:
                 }
                 .st-key-hero_shell { padding: 1rem; border-radius: 20px; }
                 .stApp [data-testid="stHorizontalBlock"] { flex-direction: column !important; gap: .65rem !important; }
-                .stApp [data-testid="column"] { width: 100% !important; min-width: 0 !important; flex: 1 1 auto !important; }
+                .stApp [data-testid="stColumn"] { width: 100% !important; min-width: 0 !important; flex: 1 1 auto !important; }
                 .np-logo-stage { width: min(42vw, 150px); margin: .1rem auto 0; padding: .65rem; }
                 .np-hero-project-name { white-space: normal !important; overflow-wrap: anywhere; font-size: clamp(2.2rem, 10vw, 3.5rem) !important; }
                 .np-hero-tagline { margin-top: .5rem; }
@@ -1729,6 +1734,102 @@ def configure_dark_experience() -> None:
             }
             @media (prefers-reduced-motion: reduce) {
                 [class*="st-key-wizard_stage_"] { animation: none !important; }
+            }
+
+            /* Stable brand and controls across Community Cloud themes. */
+            html, body, .stApp, .stApp * {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+            }
+            .np-compact-logo-stage {
+                position: relative; display: grid; place-items: center;
+                width: 70px; height: 70px; flex: 0 0 70px;
+                border-radius: 50%; isolation: isolate;
+                background: radial-gradient(circle, #e9fbf7 0 46%, #baf2e9 63%, #42bdb2 83%, rgba(45,212,191,.12) 100%);
+                box-shadow: 0 0 22px rgba(45,212,191,.25), inset 0 0 12px rgba(255,255,255,.4);
+            }
+            .np-compact-logo-stage::after {
+                content: ""; position: absolute; inset: 2px; border-radius: 50%;
+                border: 1px solid rgba(6,94,86,.36); pointer-events: none;
+            }
+            .np-compact-logo {
+                position: relative; z-index: 1; width: 78% !important; height: auto !important;
+                flex: none !important; padding: 0 !important; object-fit: contain;
+                border-radius: 0 !important; background: transparent !important;
+            }
+            .np-compact-header { overflow: visible !important; }
+            .st-key-question_card_sex [data-testid="stRadio"],
+            .st-key-question_card_health [data-testid="stRadio"] { width: 100% !important; }
+            .st-key-question_card_sex > [data-testid="stElementContainer"],
+            .st-key-question_card_health > [data-testid="stElementContainer"] {
+                width: 100% !important; min-width: 0 !important;
+            }
+            .st-key-question_card_sex [data-testid="stWidgetLabel"],
+            .st-key-question_card_health [data-testid="stRadio"] [data-testid="stWidgetLabel"] {
+                width: 100% !important; justify-content: center !important;
+                text-align: center !important; margin: .25rem 0 .65rem !important;
+            }
+            .st-key-question_card_sex [role="radiogroup"],
+            .st-key-question_card_health [role="radiogroup"] {
+                display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                width: 100% !important; gap: .75rem !important;
+            }
+            .st-key-question_card_sex [role="radiogroup"] label,
+            .st-key-question_card_health [role="radiogroup"] label {
+                display: flex !important; align-items: center !important; justify-content: center !important;
+                width: 100% !important; min-width: 0 !important; min-height: 58px !important;
+                margin: 0 !important; padding: .7rem !important;
+                border: 1.5px solid #4b7377 !important; border-radius: 14px !important;
+                background: #0c252b !important; color: #effdfa !important;
+            }
+            .st-key-question_card_sex [role="radiogroup"] label:has(input:checked),
+            .st-key-question_card_health [role="radiogroup"] label:has(input:checked) {
+                border-color: #5eead4 !important; background: #164b4b !important;
+                box-shadow: inset 0 0 0 1px #5eead4, 0 0 0 2px rgba(45,212,191,.12) !important;
+            }
+            .st-key-question_card_sex [role="radiogroup"] label *,
+            .st-key-question_card_health [role="radiogroup"] label * { color: #effdfa !important; }
+            .st-key-question_card_sex [role="radiogroup"] input,
+            .st-key-question_card_health [role="radiogroup"] input { accent-color: #2dd4bf !important; }
+            .st-key-question_card_health [data-testid="stNumberInput"] { margin-bottom: 1.25rem; }
+            .st-key-question_card_health [data-testid="stRadio"] { margin-top: .7rem; }
+            [data-testid="stSelectbox"] [data-baseweb="select"] > div {
+                min-height: 50px !important; color: #f0fdfa !important;
+                background: #10272e !important; border: 1px solid #54777b !important;
+            }
+            [data-testid="stSelectbox"] [data-baseweb="select"] *,
+            [role="listbox"] *, [data-baseweb="popover"] * { color: #f0fdfa !important; }
+            [role="listbox"], [data-baseweb="popover"] { background: #10272e !important; }
+            [data-testid="stSelectbox"] [data-baseweb="select"] svg { fill: #bcece4 !important; }
+            [data-testid="stWidgetLabel"] p,
+            [data-testid="stSelectbox"] [data-baseweb="select"],
+            [data-testid="stSelectbox"] [data-baseweb="select"] div,
+            [data-testid="stTextInput"] input,
+            [data-testid="stNumberInput"] input,
+            .st-key-question_card_sex [role="radiogroup"] label p,
+            .st-key-question_card_health [role="radiogroup"] label p {
+                font-size: 1rem !important;
+            }
+            [data-testid="stTextInput"] input:-webkit-autofill,
+            [data-testid="stNumberInput"] input:-webkit-autofill {
+                -webkit-text-fill-color: #f0fdfa !important;
+                -webkit-box-shadow: 0 0 0 1000px #10272e inset !important;
+                box-shadow: 0 0 0 1000px #10272e inset !important;
+                caret-color: #f0fdfa !important;
+            }
+            @media (max-width: 700px) {
+                .st-key-hero_shell { overflow: visible !important; padding: 1.2rem 1rem 1.6rem !important; }
+                .st-key-hero_shell::before, .st-key-hero_shell::after { display: none !important; }
+                .st-key-hero_shell [data-testid="stHorizontalBlock"] { display: flex !important; flex-direction: column !important; align-items: stretch !important; gap: 1.4rem !important; }
+                .st-key-hero_shell [data-testid="stColumn"] { width: 100% !important; flex: 0 0 auto !important; }
+                .np-hero-tagline { position: relative; z-index: 1; margin: .8rem 0 0 !important; }
+                .np-logo-stage { width: min(62vw, 230px) !important; margin: .4rem auto .4rem !important; padding: 1rem !important; }
+                .np-compact-logo-stage { width: 56px; height: 56px; flex-basis: 56px; }
+                .np-compact-header { padding: .75rem !important; gap: .75rem !important; }
+                .stApp [data-testid="stHorizontalBlock"] { width: 100% !important; margin-inline: 0 !important; }
+                .stApp [data-testid="stColumn"] { margin-inline: 0 !important; padding-inline: 0 !important; }
+                .stButton, .stButton > button, .stFormSubmitButton, .stFormSubmitButton > button { width: 100% !important; margin-inline: 0 !important; }
+                .st-key-question_card_sex [role="radiogroup"] label,
+                .st-key-question_card_health [role="radiogroup"] label { min-height: 54px !important; }
             }
         </style>
         """,
@@ -1935,7 +2036,7 @@ def render_header(expanded: bool = True) -> None:
         st.markdown(
             f"""
             <header class="np-compact-header">
-                <img class="np-compact-logo" src="{PROJECT_LOGO_DATA_URI}" alt="NephroPreempt logo">
+                <span class="np-compact-logo-stage"><img class="np-compact-logo" src="{PROJECT_LOGO_DATA_URI}" alt="NephroPreempt logo"></span>
                 <div class="np-compact-title">{APP_TITLE}</div>
             </header>
             """,
@@ -2690,48 +2791,20 @@ def run_prediction(bundle: AssetBundle, inputs: StaticInputs, uacr_values: list[
     )
 
 
-def default_dob() -> date:
-    today = date.today()
-    try:
-        return today.replace(year=today.year - 55)
-    except ValueError:
-        return today.replace(year=today.year - 55, day=28)
-
-
-def dob_for_age(age_years: float) -> date:
-    today = date.today()
-    year = today.year - int(age_years)
-    try:
-        return today.replace(year=year)
-    except ValueError:
-        return today.replace(year=year, day=28)
-
-
 WIZARD_STEPS = (
     ("Welcome", "Patient name"),
     ("Profile", "Date of birth"),
     ("Profile", "Height and weight"),
     ("Profile", "Biological sex"),
-    ("Vitals", "Systolic blood pressure"),
-    ("History", "Diabetes"),
-    ("History", "Hypertension"),
-    ("History", "Smoking status"),
-    ("Treatment", "ACE inhibitor or ARB use"),
+    ("Health", "Health and treatment"),
     ("Laboratory", "12-week UACR series"),
     ("Review", "Verify and analyze"),
 )
 
 WIZARD_DATA_KEYS = (
-    "patient_name",
-    "patient_dob",
-    "patient_sex",
-    "patient_weight_kg",
-    "patient_height_cm",
-    "baseline_sbp",
-    "has_diabetes",
-    "has_hypertension",
-    "is_smoker",
-    "uses_acei_arb",
+    "patient_name", "dob_year", "dob_month", "dob_day", "patient_sex",
+    "patient_weight_kg", "patient_height_cm", "baseline_sbp",
+    "has_diabetes", "has_hypertension", "is_smoker", "uses_acei_arb",
     *(f"uacr_week_{index}" for index in range(1, WEEKS_IN_SERIES + 1)),
 )
 
@@ -2739,13 +2812,15 @@ WIZARD_DATA_KEYS = (
 def initialize_session_state() -> None:
     defaults: dict[str, Any] = {
         "wizard_step": 1,
-        "wizard_schema_version": 2,
+        "wizard_schema_version": 3,
         "patient_name": "",
-        "patient_dob": default_dob(),
+        "dob_year": None,
+        "dob_month": None,
+        "dob_day": None,
         "patient_sex": None,
-        "patient_weight_kg": 78.0,
-        "patient_height_cm": 170.0,
-        "baseline_sbp": 132,
+        "patient_weight_kg": None,
+        "patient_height_cm": None,
+        "baseline_sbp": None,
         "has_diabetes": None,
         "has_hypertension": None,
         "is_smoker": None,
@@ -2760,6 +2835,16 @@ def initialize_session_state() -> None:
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+    previous_schema = int(st.session_state.get("wizard_schema_version", 2))
+    if previous_schema < 3:
+        old_step = int(st.session_state.get("wizard_step", 1))
+        st.session_state["wizard_step"] = old_step if old_step <= 4 else (5 if old_step <= 9 else 6 if old_step == 10 else 7)
+        # The old date widget had a preselected date, so require a fresh choice.
+        st.session_state.update(dob_year=None, dob_month=None, dob_day=None)
+        for key, old_default in (("patient_weight_kg", 78.0), ("patient_height_cm", 170.0), ("baseline_sbp", 132)):
+            if st.session_state.get(key) == old_default and st.session_state.get("analysis_result") is None:
+                st.session_state[key] = None
 
     # Migrate values from the earlier boolean-based wizard without losing data.
     for key in ("has_diabetes", "has_hypertension", "is_smoker", "uses_acei_arb"):
@@ -2783,7 +2868,7 @@ def initialize_session_state() -> None:
     except (TypeError, ValueError):
         current_step = 1
     st.session_state["wizard_step"] = int(np.clip(current_step, 1, len(WIZARD_STEPS)))
-    st.session_state["wizard_schema_version"] = 2
+    st.session_state["wizard_schema_version"] = 3
 
 
 def invalidate_analysis() -> None:
@@ -2811,10 +2896,20 @@ def binary_choice_value(key: str) -> int:
     return 1 if st.session_state.get(key) == "Yes" else 0
 
 
+def dob_from_state() -> date | None:
+    parts = [st.session_state.get(key) for key in ("dob_year", "dob_month", "dob_day")]
+    if any(part is None for part in parts):
+        return None
+    try:
+        return date(*(int(part) for part in parts))
+    except (TypeError, ValueError):
+        return None
+
+
 def inputs_from_state() -> StaticInputs:
-    dob_value = st.session_state["patient_dob"]
-    if isinstance(dob_value, datetime):
-        dob_value = dob_value.date()
+    dob_value = dob_from_state()
+    if dob_value is None:
+        raise ValueError("Select a valid date of birth before analysis.")
     return StaticInputs(
         dob=dob_value,
         age=decimal_age_from_dob(dob_value),
@@ -2850,18 +2945,6 @@ def render_error_summary(errors: list[str]) -> None:
         f'<div class="np-error-summary" role="alert"><ul>{items}</ul></div>',
         unsafe_allow_html=True,
     )
-
-
-def wizard_phase_index(step: int) -> int:
-    if step <= 4:
-        return 0
-    if step <= 8:
-        return 1
-    if step == 9:
-        return 2
-    if step == 10:
-        return 3
-    return 4
 
 
 def render_wizard_progress(step: int, complete: bool = False) -> None:
@@ -2901,19 +2984,23 @@ def patient_name_errors() -> list[str]:
 
 
 def dob_errors() -> list[str]:
-    inputs = inputs_from_state()
-    if not (AGE_MIN <= inputs.age <= AGE_MAX):
+    dob_value = dob_from_state()
+    if dob_value is None:
+        return ["Select a valid year, month and day of birth."]
+    age = decimal_age_from_dob(dob_value)
+    if not (AGE_MIN <= age <= AGE_MAX):
         return [f"Choose a date of birth for a patient between {AGE_MIN:.0f} and {AGE_MAX:.0f} years old."]
     return []
 
 
 def measurement_errors() -> list[str]:
-    inputs = inputs_from_state()
-    if not (BMI_MIN <= inputs.bmi <= BMI_MAX):
-        return [
-            "This height and weight combination is outside the range supported by the clinical model. "
-            "Check both measurements and try again."
-        ]
+    height = st.session_state.get("patient_height_cm")
+    weight = st.session_state.get("patient_weight_kg")
+    if height is None or weight is None:
+        return ["Enter both height and weight to continue."]
+    bmi = float(weight) / (float(height) / 100.0) ** 2
+    if not (BMI_MIN <= bmi <= BMI_MAX):
+        return ["This height and weight combination is outside the clinical model's supported range. Check both measurements."]
     return []
 
 
@@ -2921,18 +3008,28 @@ def choice_errors(key: str, label: str, options: tuple[str, ...] = ("Yes", "No")
     return [] if st.session_state.get(key) in options else [f"Select {label} to continue."]
 
 
+def health_errors() -> list[str]:
+    errors = []
+    if st.session_state.get("baseline_sbp") is None:
+        errors.append("Enter systolic blood pressure.")
+    for key, label in (
+        ("has_diabetes", "diabetes"),
+        ("has_hypertension", "hypertension"),
+        ("is_smoker", "current smoking"),
+        ("uses_acei_arb", "ACE inhibitor or ARB use"),
+    ):
+        errors.extend(choice_errors(key, f"Yes or No for {label}"))
+    return errors
+
+
 def all_wizard_errors() -> list[str]:
     errors = [
-        *patient_name_errors(),
-        *dob_errors(),
-        *measurement_errors(),
+        *patient_name_errors(), *dob_errors(), *measurement_errors(),
         *choice_errors("patient_sex", "a biological sex", ("Male", "Female")),
-        *choice_errors("has_diabetes", "Yes or No for diabetes"),
-        *choice_errors("has_hypertension", "Yes or No for hypertension"),
-        *choice_errors("is_smoker", "Yes or No for current smoking"),
-        *choice_errors("uses_acei_arb", "Yes or No for ACE inhibitor or ARB use"),
+        *health_errors(),
     ]
-    errors.extend(validate_inputs(inputs_from_state(), uacr_values_from_state()))
+    if not errors:
+        errors.extend(validate_inputs(inputs_from_state(), uacr_values_from_state()))
     return list(dict.fromkeys(errors))
 
 
@@ -2986,28 +3083,26 @@ def render_name_step() -> None:
 
 
 def render_dob_step() -> None:
-    render_step_heading(
-        "Profile / Question 02",
-        "When was the patient born?",
-        "Choose the date directly from the calendar. Reference matching happens securely in the background.",
-    )
+    render_step_heading("Profile / Question 02", "When was the patient born?")
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_dob"):
-
-        st.date_input(
-            "Date of birth",
-            min_value=dob_for_age(AGE_MAX),
-            max_value=dob_for_age(AGE_MIN),
-            format="YYYY-MM-DD",
-            key="patient_dob",
-            on_change=invalidate_analysis,
-        )
-    render_navigation(
-        step=2,
-        back_label="Back to name",
-        next_label="Continue to measurements",
-        validator=dob_errors,
-    )
+        year_col, month_col, day_col = st.columns(3, gap="medium")
+        with year_col:
+            st.selectbox(
+                "Year", range(date.today().year - 18, date.today().year - 91, -1),
+                index=None, placeholder="Select year", key="dob_year", on_change=invalidate_analysis,
+            )
+        with month_col:
+            st.selectbox(
+                "Month", range(1, 13), format_func=lambda month: calendar.month_name[month],
+                index=None, placeholder="Select month", key="dob_month", on_change=invalidate_analysis,
+            )
+        with day_col:
+            st.selectbox(
+                "Day", range(1, 32), index=None, placeholder="Select day",
+                key="dob_day", on_change=invalidate_analysis,
+            )
+    render_navigation(step=2, back_label="Back to name", next_label="Continue to measurements", validator=dob_errors)
 
 
 def render_measurements_step() -> None:
@@ -3027,6 +3122,8 @@ def render_measurements_step() -> None:
                 max_value=HEIGHT_MAX,
                 step=0.1,
                 format="%.1f",
+                value=None,
+                placeholder="Enter height",
                 key="patient_height_cm",
                 on_change=invalidate_analysis,
             )
@@ -3037,6 +3134,8 @@ def render_measurements_step() -> None:
                 max_value=WEIGHT_MAX,
                 step=0.1,
                 format="%.1f",
+                value=None,
+                placeholder="Enter weight",
                 key="patient_weight_kg",
                 on_change=invalidate_analysis,
             )
@@ -3068,119 +3167,30 @@ def render_sex_step() -> None:
     render_navigation(
         step=4,
         back_label="Back to measurements",
-        next_label="Continue to blood pressure",
+        next_label="Continue to health details",
         validator=lambda: choice_errors("patient_sex", "a biological sex", ("Male", "Female")),
     )
 
 
-def render_sbp_step() -> None:
-    render_step_heading(
-        "Vitals / Question 05",
-        "What is the baseline systolic pressure?",
-        "Use the upper blood-pressure number from a representative baseline measurement.",
-    )
+def render_health_step() -> None:
+    render_step_heading("Health / Question 05", "Health and treatment details")
     render_error_summary(list(st.session_state.get("step_errors", [])))
-    with st.container(border=True, key="question_card_sbp"):
-
-        st.slider(
-            "Systolic blood pressure (mmHg)",
-            min_value=SBP_MIN,
-            max_value=SBP_MAX,
-            step=1,
-            key="baseline_sbp",
-            on_change=invalidate_analysis,
+    with st.container(border=True, key="question_card_health"):
+        st.number_input(
+            "Systolic blood pressure (mmHg)", min_value=SBP_MIN, max_value=SBP_MAX,
+            value=None, step=1, placeholder="Enter systolic pressure",
+            key="baseline_sbp", on_change=invalidate_analysis,
         )
+        for label, key in (
+            ("Diagnosed diabetes", "has_diabetes"),
+            ("Diagnosed hypertension", "has_hypertension"),
+            ("Current active smoker", "is_smoker"),
+            ("Current ACE inhibitor / ARB use", "uses_acei_arb"),
+        ):
+            st.radio(label, ["Yes", "No"], index=None, horizontal=True, key=key, on_change=invalidate_analysis)
     render_navigation(
-        step=5,
-        back_label="Back to biological sex",
-        next_label="Continue to diabetes",
-    )
-
-
-def render_binary_step(
-    *,
-    step: int,
-    state_key: str,
-    kicker: str,
-    title: str,
-    copy: str,
-    field_label: str,
-    help_text: str,
-    back_label: str,
-    next_label: str,
-) -> None:
-    render_step_heading(kicker, title, copy)
-    render_error_summary(list(st.session_state.get("step_errors", [])))
-    with st.container(border=True, key=f"question_card_{state_key}"):
-        st.radio(
-            field_label,
-            ["Yes", "No"],
-            index=None,
-            horizontal=True,
-            key=state_key,
-            on_change=invalidate_analysis,
-        )
-    render_navigation(
-        step=step,
-        back_label=back_label,
-        next_label=next_label,
-        validator=lambda: choice_errors(state_key, f"Yes or No for {field_label.lower()}"),
-    )
-
-
-def render_diabetes_step() -> None:
-    render_binary_step(
-        step=6,
-        state_key="has_diabetes",
-        kicker="History / Question 06",
-        title="Is diabetes documented?",
-        copy="Answer from the current medical record.",
-        field_label="Diagnosed diabetes",
-        help_text="Choose Yes when diabetes is documented in the current medical record.",
-        back_label="Back to blood pressure",
-        next_label="Continue to hypertension",
-    )
-
-
-def render_hypertension_step() -> None:
-    render_binary_step(
-        step=7,
-        state_key="has_hypertension",
-        kicker="History / Question 07",
-        title="Is hypertension documented?",
-        copy="Keep this separate from the baseline pressure value entered earlier.",
-        field_label="Diagnosed hypertension",
-        help_text="Choose Yes when hypertension is documented in the current medical record.",
-        back_label="Back to diabetes",
-        next_label="Continue to smoking status",
-    )
-
-
-def render_smoking_step() -> None:
-    render_binary_step(
-        step=8,
-        state_key="is_smoker",
-        kicker="History / Question 08",
-        title="Does the patient currently smoke?",
-        copy="The bundled model uses current active smoking status.",
-        field_label="Current active smoker",
-        help_text="Choose Yes for current active smoking. Former smoking is not represented in the model.",
-        back_label="Back to hypertension",
-        next_label="Continue to treatment",
-    )
-
-
-def render_medication_step() -> None:
-    render_binary_step(
-        step=9,
-        state_key="uses_acei_arb",
-        kicker="Treatment / Question 09",
-        title="Is an ACE inhibitor or ARB in use?",
-        copy="Confirm current kidney-protective medication use from the medication list.",
-        field_label="Current ACE inhibitor / ARB use",
-        help_text="Choose Yes for current use of an ACE inhibitor or angiotensin II receptor blocker.",
-        back_label="Back to smoking status",
-        next_label="Continue to UACR readings",
+        step=5, back_label="Back to biological sex",
+        next_label="Continue to UACR readings", validator=health_errors,
     )
 
 
@@ -3191,7 +3201,7 @@ def out_of_distribution_weeks(values: list[float]) -> list[int]:
 
 def render_uacr_step() -> None:
     render_step_heading(
-        "Laboratory / Question 10",
+        "Laboratory / Question 06",
         "Enter the 12-week UACR series",
         "Add one urine albumin-to-creatinine ratio result per consecutive week so the trend model can read the full trajectory.",
     )
@@ -3218,7 +3228,7 @@ def render_uacr_step() -> None:
             back_col, next_col = st.columns(2)
             with back_col:
                 back_clicked = st.form_submit_button(
-                    "Back to treatment",
+                    "Back to health details",
                     type="secondary",
                     width="stretch",
                 )
@@ -3231,14 +3241,14 @@ def render_uacr_step() -> None:
 
     if back_clicked:
         invalidate_analysis()
-        move_to_step(9)
+        move_to_step(5)
     if next_clicked:
         invalidate_analysis()
         errors = all_wizard_errors()
         if errors:
             st.session_state["step_errors"] = errors
             st.rerun()
-        move_to_step(11)
+        move_to_step(7)
 
     outlier_weeks = out_of_distribution_weeks(uacr_values_from_state())
     if outlier_weeks:
@@ -3309,7 +3319,7 @@ def render_review_cards(inputs: StaticInputs, uacr_values: list[float]) -> None:
 
 def render_review_step(bundle: AssetBundle) -> None:
     render_step_heading(
-        "Review / Question 11",
+        "Review / Question 07",
         "Everything ready?",
         "Check the full assessment before running the models. Only the values you provided appear below.",
     )
@@ -3318,6 +3328,10 @@ def render_review_step(bundle: AssetBundle) -> None:
     if st.session_state.get("analysis_error"):
         st.error(str(st.session_state["analysis_error"]))
 
+    if review_errors:
+        st.button("Edit assessment", key="edit_incomplete_assessment", width="stretch",
+                  on_click=prepare_step_change, args=(1,))
+        return
     inputs = inputs_from_state()
     uacr_values = uacr_values_from_state()
     with st.container(border=True, key="review_card_shell"):
@@ -3351,7 +3365,7 @@ def render_review_step(bundle: AssetBundle) -> None:
                 key="wizard_back_review",
                 width="stretch",
                 on_click=prepare_step_change,
-                args=(10,),
+                args=(6,),
             )
         with submit_col:
             analyze_clicked = st.button(
@@ -3522,6 +3536,7 @@ def build_simple_pdf_report(
         "",
         "Kinetic UACR Data",
         "Raw weekly UACR: " + ", ".join(f"{value:.1f}" for value in uacr_values),
+        f"Average weekly UACR: {np.mean(uacr_values):.1f} mg/g",
         "Smoothed UACR: " + ", ".join(f"{value:.1f}" for value in result.uacr_processing.smoothed),
         f"UACR_opt: {result.uacr_processing.uacr_opt:.2f} mg/g",
         f"Internal Z-slope beta1: {result.uacr_processing.beta1:.4f}",
@@ -3701,7 +3716,7 @@ def render_result(
         static_col, trend_col = st.columns(2)
         static_col.metric("Clinical profile", f"{result.p_xgb * 100.0:.1f}%")
         trend_col.metric("12-week trend", f"{result.p_trend * 100.0:.1f}%")
-        st.metric("Latest UACR (mg/g)", f"{uacr_values[-1]:.1f}")
+        st.metric("Average UACR (mg/g)", f"{np.mean(uacr_values):.1f}")
         if result.severity_floor_applied:
             st.warning(result.severity_floor_label)
 
@@ -3765,18 +3780,10 @@ def main() -> None:
             elif step == 4:
                 render_sex_step()
             elif step == 5:
-                render_sbp_step()
+                render_health_step()
             elif step == 6:
-                render_diabetes_step()
-            elif step == 7:
-                render_hypertension_step()
-            elif step == 8:
-                render_smoking_step()
-            elif step == 9:
-                render_medication_step()
-            elif step == 10:
                 render_uacr_step()
-            elif step == 11:
+            elif step == 7:
                 render_review_step(bundle)
 
     render_system_diagnostics(bundle)
@@ -3784,3 +3791,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
