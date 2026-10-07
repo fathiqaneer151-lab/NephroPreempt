@@ -1631,6 +1631,105 @@ def configure_dark_experience() -> None:
                     animation: none !important;
                 }
             }
+
+            /* Cloud-safe native widget colors and phone layouts. */
+            :root {
+                --primary-color: #2dd4bf;
+                --background-color: #02080b;
+                --secondary-background-color: #081a20;
+                --text-color: #f0fdfa;
+            }
+            html, body, .stApp { max-width: 100%; overflow-x: clip; }
+            .np-compact-header { justify-content: flex-start; min-width: 0; }
+            .np-compact-logo {
+                width: 108px; height: 66px; flex: 0 0 108px;
+                padding: .45rem; background: #e8faf6;
+                object-fit: contain; border-radius: 12px;
+            }
+            .np-compact-title { overflow-wrap: anywhere; }
+            .np-progress-card { padding-bottom: .55rem; }
+            .np-progress-track { margin-bottom: .2rem; }
+            .np-section-heading { margin: 1.1rem auto 1rem; }
+            .np-section-title { overflow-wrap: anywhere; }
+            .np-error-summary {
+                padding: .75rem 1rem; color: #f9d5d1 !important;
+                border-color: rgba(248,113,113,.4) !important;
+                background: #341b1e !important;
+                font-size: 1rem;
+            }
+            .np-error-summary li { color: #f9d5d1 !important; }
+            [data-testid="stNumberInput"] input,
+            [data-testid="stTextInput"] input,
+            [data-testid="stDateInput"] input,
+            [data-testid="stNumberInput"] div[data-baseweb="input"] > div,
+            [data-testid="stTextInput"] div[data-baseweb="input"] > div,
+            [data-testid="stDateInput"] div[data-baseweb="input"] > div {
+                color: #f0fdfa !important;
+                -webkit-text-fill-color: #f0fdfa !important;
+                background: #10272e !important;
+                border-color: #45666b !important;
+            }
+            [data-testid="stNumberInput"] input::placeholder,
+            [data-testid="stTextInput"] input::placeholder { color: #a8c0c4 !important; -webkit-text-fill-color: #a8c0c4 !important; }
+            [data-testid="stNumberInput"] button,
+            [data-testid="stDateInput"] button {
+                color: #d7fbf4 !important; background: #14323a !important;
+            }
+            [data-testid="stNumberInput"] button svg,
+            [data-testid="stDateInput"] button svg { fill: currentColor !important; }
+            .stButton button[kind="primary"] p,
+            .stFormSubmitButton button[kind="primaryFormSubmit"] p,
+            .stButton button[data-testid="baseButton-primary"] p,
+            .stFormSubmitButton button[data-testid="baseButton-primaryFormSubmit"] p { color: #002622 !important; }
+            .stApp [data-testid="stMetricLabel"] p { color: #bdd3d5 !important; }
+            .stApp [data-testid="stMetricValue"] { color: #f0fdfa !important; }
+            [data-testid="stWidgetLabel"] p,
+            [data-testid="stWidgetLabel"] label { color: #d7e9e9 !important; }
+            .np-review-term { color: #b7d0d1 !important; font-size: .9rem; }
+            .np-review-value { font-size: .95rem; }
+            .np-uacr-pill { font-size: .85rem; padding: .35rem .55rem; }
+            @keyframes npStepReveal {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            [class*="st-key-wizard_stage_"] { animation: npStepReveal 240ms ease-out both; }
+            @media (max-width: 900px) {
+                .st-key-hero_shell [data-testid="stHorizontalBlock"] { flex-direction: column !important; }
+                .st-key-hero_shell [data-testid="column"] { width: 100% !important; min-width: 0 !important; flex: 1 1 auto !important; }
+                .np-logo-stage { width: min(60vw, 270px); }
+            }
+            @media (max-width: 700px) {
+                [data-testid="stMainBlockContainer"] {
+                    width: 100% !important;
+                    padding: .75rem max(.75rem, env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)) !important;
+                }
+                .st-key-hero_shell { padding: 1rem; border-radius: 20px; }
+                .stApp [data-testid="stHorizontalBlock"] { flex-direction: column !important; gap: .65rem !important; }
+                .stApp [data-testid="column"] { width: 100% !important; min-width: 0 !important; flex: 1 1 auto !important; }
+                .np-logo-stage { width: min(42vw, 150px); margin: .1rem auto 0; padding: .65rem; }
+                .np-hero-project-name { white-space: normal !important; overflow-wrap: anywhere; font-size: clamp(2.2rem, 10vw, 3.5rem) !important; }
+                .np-hero-tagline { margin-top: .5rem; }
+                .np-compact-header { gap: .65rem; padding: .6rem; }
+                .np-compact-logo { width: 84px; height: 58px; flex-basis: 84px; }
+                .np-compact-title { font-size: 1rem; }
+                .np-section-title { font-size: clamp(1.7rem, 8vw, 2.4rem) !important; line-height: 1.12 !important; }
+                [class*="st-key-question_card_"] [data-testid="stVerticalBlockBorderWrapper"],
+                .st-key-review_card_shell [data-testid="stVerticalBlockBorderWrapper"] { padding: 1rem !important; }
+                [class*="st-key-uacr_week_"] [data-testid="stNumberInput"] { grid-template-columns: 4.8rem minmax(0,1fr); }
+                .np-review-grid { grid-template-columns: 1fr !important; }
+                .risk-banner { min-height: 0; }
+                .np-result-head { margin-top: .7rem; }
+                [data-testid="stPlotlyChart"] { width: 100%; overflow: hidden; }
+            }
+            @media (max-width: 380px) {
+                .np-hero-project-name { font-size: 2rem !important; }
+                .np-progress-top { align-items: center; flex-direction: row; }
+                .np-review-row { flex-direction: column; gap: .15rem; }
+                .np-review-value { text-align: left; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                [class*="st-key-wizard_stage_"] { animation: none !important; }
+            }
         </style>
         """,
         unsafe_allow_html=True,
@@ -1836,14 +1935,8 @@ def render_header(expanded: bool = True) -> None:
         st.markdown(
             f"""
             <header class="np-compact-header">
-                <div class="np-compact-brand">
-                    <img class="np-compact-logo" src="{PROJECT_LOGO_DATA_URI}" alt="NephroPreempt logo">
-                    <div>
-                        <div class="np-compact-title">{APP_TITLE}</div>
-                        <div class="np-compact-meta">Predictive kidney analytics</div>
-                    </div>
-                </div>
-                <span class="np-compact-status">Assessment in progress</span>
+                <img class="np-compact-logo" src="{PROJECT_LOGO_DATA_URI}" alt="NephroPreempt logo">
+                <div class="np-compact-title">{APP_TITLE}</div>
             </header>
             """,
             unsafe_allow_html=True,
@@ -1855,27 +1948,9 @@ def render_header(expanded: bool = True) -> None:
         with copy_col:
             st.markdown(
                 f"""
-                <div class="np-brand-row">
-                    <div class="np-brand-mark" aria-hidden="true">
-                        <svg focusable="false" width="28" height="28" viewBox="0 0 24 24" fill="none">
-                            <path d="M9.2 3.5c-3.4 1-5.4 4.1-4.7 7.7.7 3.8 3.3 7 6.2 8.9V13c-1.8-.7-2.8-2.2-2.8-4.1 0-2 1-3.7 2.7-4.7-.4-.5-.9-.8-1.4-.7Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M14.8 3.5c3.4 1 5.4 4.1 4.7 7.7-.7 3.8-3.3 7-6.2 8.9V13c1.8-.7 2.8-2.2 2.8-4.1 0-2-1-3.7-2.7-4.7.4-.5.9-.8 1.4-.7Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="np-brand-name">Clinical intelligence platform</div>
-                        <div class="np-brand-meta">Local decision-support workspace</div>
-                    </div>
-                </div>
-                <div class="np-eyebrow"><span class="np-eyebrow-dot"></span>Predictive kidney analytics</div>
+                <div class="np-eyebrow"><span class="np-eyebrow-dot"></span>Kidney risk assessment</div>
                 <h1 class="np-hero-project-name">{APP_TITLE}</h1>
                 <div class="np-hero-tagline">See risk earlier. Act with clarity.</div>
-                <p class="np-hero-copy">{APP_SUBTITLE}. A calm, question-by-question assessment built around patient context and a 12-week UACR trajectory.</p>
-                <div class="np-hero-badges" aria-label="Platform capabilities">
-                    <span class="np-hero-badge">Local clinical models</span>
-                    <span class="np-hero-badge">Guided assessment</span>
-                    <span class="np-hero-badge">Review before analysis</span>
-                </div>
                 """,
                 unsafe_allow_html=True,
             )
@@ -1888,6 +1963,7 @@ def render_header(expanded: bool = True) -> None:
                 """,
                 unsafe_allow_html=True,
             )
+
 
 def normalize_name(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", str(value).strip().lower()).strip("_")
@@ -2771,12 +2847,7 @@ def render_error_summary(errors: list[str]) -> None:
         return
     items = "".join(f"<li>{html.escape(str(error))}</li>" for error in errors)
     st.markdown(
-        f"""
-        <div class="np-error-summary" role="alert" tabindex="-1" aria-labelledby="np-error-title">
-            <strong id="np-error-title">Please review this answer</strong>
-            <ul>{items}</ul>
-        </div>
-        """,
+        f'<div class="np-error-summary" role="alert"><ul>{items}</ul></div>',
         unsafe_allow_html=True,
     )
 
@@ -2796,87 +2867,26 @@ def wizard_phase_index(step: int) -> int:
 def render_wizard_progress(step: int, complete: bool = False) -> None:
     safe_step = int(np.clip(step, 1, len(WIZARD_STEPS)))
     percentage = 100 if complete else int(round((safe_step - 1) / (len(WIZARD_STEPS) - 1) * 100))
-    status_text = "Analysis complete" if complete else WIZARD_STEPS[safe_step - 1][1]
-    active_phase = 4 if complete else wizard_phase_index(safe_step)
-    milestones = ("Profile", "Health", "Treatment", "Labs", "Review")
-    milestone_html = "".join(
-        f'<span class="{"is-active" if index <= active_phase else ""}">{html.escape(label)}</span>'
-        for index, label in enumerate(milestones)
-    )
+    status_text = "Assessment complete" if complete else WIZARD_STEPS[safe_step - 1][1]
     st.markdown(
         f"""
         <div class="np-progress-card">
             <div class="np-progress-top">
                 <span class="np-progress-label">{html.escape(status_text)}</span>
-                <span class="np-progress-value">Step {safe_step} of {len(WIZARD_STEPS)} &bull; {percentage}% complete</span>
+                <span class="np-progress-value">{safe_step} / {len(WIZARD_STEPS)}</span>
             </div>
             <div class="np-progress-track" role="progressbar" aria-label="Assessment progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{percentage}">
                 <div class="np-progress-fill" style="width:{percentage}%"></div>
             </div>
-            <div class="np-progress-milestones" aria-hidden="true">{milestone_html}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Presentation-only phase rail. Native controls remain authoritative.
-    if option_menu is not None:
-        try:
-            option_menu(
-                None,
-                list(milestones),
-                icons=["person-vcard", "heart-pulse", "capsule", "activity", "check2-circle"],
-                default_index=active_phase,
-                manual_select=active_phase,
-                orientation="horizontal",
-                key="assessment_phase_indicator",
-                styles={
-                    "container": {
-                        "padding": "5px",
-                        "width": "100%",
-                        "max-width": "none",
-                        "margin": "0",
-                        "box-sizing": "border-box",
-                        "background-color": "#061419",
-                        "border": "1px solid rgba(94,234,212,.14)",
-                        "border-radius": "0",
-                        "pointer-events": "none",
-                    },
-                    "icon": {"color": "#5eead4", "font-size": "15px"},
-                    "nav-link": {
-                        "color": "#91a9af",
-                        "font-size": "13px",
-                        "font-weight": "600",
-                        "text-align": "center",
-                        "margin": "0",
-                        "border-radius": "12px",
-                    },
-                    "nav-link-selected": {
-                        "color": "#00120f",
-                        "background": "linear-gradient(100deg,#5eead4,#22d3ee)",
-                    },
-                },
-            )
-        except Exception:
-            pass
-
-
-def render_step_heading(kicker: str, title: str, copy: str) -> None:
-    st.markdown(
-        f"""
-        <div class="np-section-heading">
-            <div class="np-section-kicker">{html.escape(kicker)}</div>
-            <h2 class="np-section-title">{html.escape(title)}</h2>
-            <p class="np-section-copy">{html.escape(copy)}</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
 
-def render_question_number(step: int) -> None:
+def render_step_heading(kicker: str, title: str, copy: str = "") -> None:
     st.markdown(
-        f'<span class="np-question-number" aria-hidden="true">{step:02d}</span>',
+        f'<div class="np-section-heading"><h2 class="np-section-title">{html.escape(title)}</h2></div>',
         unsafe_allow_html=True,
     )
 
@@ -2943,14 +2953,8 @@ def render_navigation(
     back_label: str | None = None,
 ) -> None:
     if step == 1:
-        _, action = st.columns([1.15, 0.85])
-        with action:
-            if st.button(next_label, type="primary", key=f"wizard_next_{step}", width="stretch"):
-                go_forward(step + 1, validator)
-        st.markdown(
-            '<div class="np-nav-hint">Your answers are saved automatically as you move through the assessment.</div>',
-            unsafe_allow_html=True,
-        )
+        if st.button(next_label, type="primary", key=f"wizard_next_{step}", width="stretch"):
+            go_forward(step + 1, validator)
         return
 
     back_col, next_col = st.columns(2)
@@ -2970,18 +2974,13 @@ def render_name_step() -> None:
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_name"):
-        render_question_number(1)
+
         st.text_input(
             "Patient name",
             key="patient_name",
             placeholder="Enter the patient's name",
             max_chars=80,
-            help="Used for the greeting on the results screen. Follow your organization's privacy policy when entering identifiers.",
             on_change=invalidate_analysis,
-        )
-        st.markdown(
-            '<div class="np-question-hint">The name is not sent to either clinical model and does not affect the risk score.</div>',
-            unsafe_allow_html=True,
         )
     render_navigation(step=1, next_label="Continue to date of birth", validator=patient_name_errors)
 
@@ -2994,19 +2993,14 @@ def render_dob_step() -> None:
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_dob"):
-        render_question_number(2)
+
         st.date_input(
             "Date of birth",
             min_value=dob_for_age(AGE_MAX),
             max_value=dob_for_age(AGE_MIN),
             format="YYYY-MM-DD",
             key="patient_dob",
-            help="Used internally for the model and age-matched reference curve.",
             on_change=invalidate_analysis,
-        )
-        st.markdown(
-            '<div class="np-question-hint">Supported patient age range: 18 to 90 years.</div>',
-            unsafe_allow_html=True,
         )
     render_navigation(
         step=2,
@@ -3024,7 +3018,7 @@ def render_measurements_step() -> None:
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_measurements"):
-        render_question_number(3)
+
         height_col, weight_col = st.columns(2, gap="large")
         with height_col:
             st.number_input(
@@ -3034,7 +3028,6 @@ def render_measurements_step() -> None:
                 step=0.1,
                 format="%.1f",
                 key="patient_height_cm",
-                help="Standing height in centimeters.",
                 on_change=invalidate_analysis,
             )
         with weight_col:
@@ -3045,13 +3038,8 @@ def render_measurements_step() -> None:
                 step=0.1,
                 format="%.1f",
                 key="patient_weight_kg",
-                help="Current measured body weight in kilograms.",
                 on_change=invalidate_analysis,
             )
-        st.markdown(
-            '<div class="np-question-hint">Check that both values come from a recent, reliable measurement.</div>',
-            unsafe_allow_html=True,
-        )
     render_navigation(
         step=3,
         back_label="Back to date of birth",
@@ -3068,14 +3056,13 @@ def render_sex_step() -> None:
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_sex"):
-        render_question_number(4)
+
         st.radio(
             "Biological sex at birth",
             ["Male", "Female"],
             index=None,
             horizontal=True,
             key="patient_sex",
-            help="The current model supports its trained male/female encoding only.",
             on_change=invalidate_analysis,
         )
     render_navigation(
@@ -3094,19 +3081,14 @@ def render_sbp_step() -> None:
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_sbp"):
-        render_question_number(5)
+
         st.slider(
             "Systolic blood pressure (mmHg)",
             min_value=SBP_MIN,
             max_value=SBP_MAX,
             step=1,
             key="baseline_sbp",
-            help="Enter the upper blood-pressure value in mmHg, measured under your standard clinical protocol.",
             on_change=invalidate_analysis,
-        )
-        st.markdown(
-            '<div class="np-question-hint">Use a baseline clinical reading rather than a single unrepresentative measurement.</div>',
-            unsafe_allow_html=True,
         )
     render_navigation(
         step=5,
@@ -3130,14 +3112,12 @@ def render_binary_step(
     render_step_heading(kicker, title, copy)
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key=f"question_card_{state_key}"):
-        render_question_number(step)
         st.radio(
             field_label,
             ["Yes", "No"],
             index=None,
             horizontal=True,
             key=state_key,
-            help=help_text,
             on_change=invalidate_analysis,
         )
     render_navigation(
@@ -3217,9 +3197,9 @@ def render_uacr_step() -> None:
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_uacr"):
-        render_question_number(10)
+
         st.markdown(
-            '<div class="np-inline-note"><strong>Unit:</strong> mg/g &nbsp;&bull;&nbsp; Enter the oldest reading at Week 1 and the newest at Week 12.</div>',
+            '<div class="np-inline-note">UACR in mg/g · Week 1 is oldest; Week 12 is newest.</div>',
             unsafe_allow_html=True,
         )
         with st.form("uacr_series_form", clear_on_submit=False, border=False):
@@ -3234,7 +3214,6 @@ def render_uacr_step() -> None:
                             step=0.1,
                             format="%.1f",
                             key=f"uacr_week_{index}",
-                            help=f"Week {index} UACR result in milligrams per gram.",
                         )
             back_col, next_col = st.columns(2)
             with back_col:
@@ -3363,11 +3342,6 @@ def render_review_step(bundle: AssetBundle) -> None:
         st.checkbox(
             "I have reviewed these entries and understand that the result supports, but does not replace, clinical judgment.",
             key="review_confirmed",
-            help="This prevents accidental submission. It is not a patient consent record.",
-        )
-        st.markdown(
-            '<p class="np-consent-note">Inference runs in this application. Do not use this tool for emergency triage.</p>',
-            unsafe_allow_html=True,
         )
 
         back_col, submit_col = st.columns(2)
@@ -3388,19 +3362,10 @@ def render_review_step(bundle: AssetBundle) -> None:
                 disabled=bool(bundle.errors)
                 or bool(review_errors)
                 or not bool(st.session_state["review_confirmed"]),
-                help=(
-                    "Resolve any missing answers and confirm the review statement."
-                    if review_errors or not st.session_state["review_confirmed"]
-                    else "Run both bundled models and combine their outputs."
-                ),
             )
 
     if bundle.errors:
-        st.error("Analysis is unavailable until all three clinical assets load successfully. Open System diagnostics below.")
-    elif review_errors:
-        st.caption("Return to the highlighted section and complete every required answer.")
-    elif not st.session_state["review_confirmed"]:
-        st.caption("Confirm the review statement to enable analysis.")
+        st.error("Analysis is unavailable until the clinical models load successfully.")
 
     if analyze_clicked:
         errors = all_wizard_errors()
@@ -3421,106 +3386,22 @@ def render_review_step(bundle: AssetBundle) -> None:
 
 
 def render_system_status(bundle: AssetBundle) -> None:
-    ready_count = sum(
-        int(path.exists())
-        for path in (XGB_MODEL_PATH, LSTM_MODEL_PATH, REFERENCE_CURVE_PATH)
-    )
-    asset_class = "np-status-pill is-error" if bundle.errors else "np-status-pill"
-    asset_label = "Clinical assets need attention" if bundle.errors else f"{ready_count}/3 clinical assets ready"
-    motion_label = "Lottie ready" if st_lottie is not None else "CSS motion fallback active"
-    st.markdown(
-        f"""
-        <div class="np-system-strip" role="status">
-            <div class="np-status-copy"><strong>Guided assessment</strong> &nbsp; Eleven focused cards with a final verification gate.</div>
-            <div class="np-status-pills">
-                <span class="{asset_class}">{html.escape(asset_label)}</span>
-                <span class="np-status-pill">Local model inference</span>
-                <span class="np-status-pill">{html.escape(motion_label)}</span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    if bundle.errors:
+        st.error("The clinical models could not be loaded. Analysis is unavailable.")
+    for warning in bundle.warnings:
+        st.warning(warning)
 
 
 def render_system_diagnostics(bundle: AssetBundle) -> None:
-    with st.expander("System diagnostics & model details", expanded=bool(bundle.errors or bundle.warnings)):
-        if shadcn_ui is not None:
-            try:
-                shadcn_ui.badges(
-                    [
-                        ("NATIVE INPUTS", "default"),
-                        ("LOCAL MODELS", "default"),
-                        ("REVIEW GATE", "default"),
-                    ],
-                    class_name="flex w-full gap-2 bg-transparent py-1",
-                    key="diagnostic_shadcn_badges",
-                )
-            except Exception:
-                pass
-        st.markdown("#### Clinical asset status")
-        asset_rows = [
-            ("XGBoost model", XGB_MODEL_PATH),
-            ("LSTM trend model", LSTM_MODEL_PATH),
-            ("Healthy reference curve", REFERENCE_CURVE_PATH),
-        ]
-        for label, path in asset_rows:
-            if path.exists():
-                st.success(f"{label}: {path.name}")
-            else:
-                st.error(f"{label}: missing from searched asset locations")
-
-        if bundle.errors:
-            for error in bundle.errors:
-                st.error(error)
-            st.info(
-                "Keep one supported filename for each of the three required assets in the same folder as app.py "
-                "or in a supported Desktop/software location."
-            )
-            st.code(
-                "python -m pip install --upgrade streamlit pandas numpy scipy plotly "
-                "xgboost tensorflow keras h5py scikit-learn joblib",
-                language="powershell",
-            )
-            if st.button("Reload clinical assets", key="reload_clinical_assets"):
-                load_assets.clear()
-                st.session_state.pop("clinical_asset_bundle", None)
-                st.rerun()
-        else:
-            st.success("All required NephroPreempt assets loaded successfully.")
-            st.write("XGBoost feature order:", bundle.xgb_feature_names)
-            if bundle.lstm_input_shape:
-                st.write("Loaded LSTM input shape:", bundle.lstm_input_shape)
-            st.info(
-                "Ptrend is produced directly by the trained LSTM model. The retrained model receives "
-                "log1p(Savitzky-smoothed UACR) as a 12-step sequence shaped (1, 12, 1)."
-            )
-
-        for warning in bundle.warnings:
-            st.warning(warning)
-
-        if st_lottie is None:
-            st.warning(
-                "streamlit-lottie is not installed, so the built-in animated SVG fallback is shown. "
-                "Install it with: python -m pip install streamlit-lottie"
-            )
-
-        st.markdown("##### Clinical thresholds and provenance")
-        st.markdown(
-            """
-            - A2 floor: 30.0 ≤ UACR_opt < 300.0 mg/g → minimum risk 11.0%
-            - A3 floor: UACR_opt ≥ 300.0 mg/g → minimum risk 28.0%
-            - Risk bands: Low <10%; Moderate 10–<25%; High 25–<50%; Critical ≥50%
-            - The patient name personalizes the result greeting only; it does not affect either model.
-            """
-        )
-        if bundle.lstm_config:
-            st.markdown("##### LSTM file metadata")
-            st.json(bundle.lstm_config)
-        st.markdown("##### Searched asset folders")
-        for directory in candidate_software_dirs():
-            marker = "ready" if directory_has_required_assets(directory) else "not complete"
-            st.caption(f"{marker}: {directory}")
+    if not bundle.errors:
+        return
+    with st.expander("Technical details", expanded=False):
+        for error in bundle.errors:
+            st.write(error)
+        if st.button("Retry loading models", key="reload_clinical_assets"):
+            load_assets.clear()
+            st.session_state.pop("clinical_asset_bundle", None)
+            st.rerun()
 
 
 def render_chart(result: PredictionResult) -> None:
@@ -3536,8 +3417,7 @@ def render_chart(result: PredictionResult) -> None:
                 "Week": weeks,
                 "Raw UACR": raw,
                 "Smoothed UACR": smooth,
-                "Savitzky Delta": result.uacr_processing.smoothing_delta,
-                "Healthy Reference P50": reference,
+                                "Reference": reference,
             }
         )
         st.dataframe(chart_frame, width="stretch", hide_index=True)
@@ -3549,7 +3429,7 @@ def render_chart(result: PredictionResult) -> None:
             x=weeks,
             y=smooth,
             mode="lines+markers",
-            name="Smoothed UACR",
+            name="UACR trend",
             line=dict(color=color, width=4),
             marker=dict(size=8, color=color, line=dict(color="#ffffff", width=2)),
             fill="tozeroy",
@@ -3562,7 +3442,7 @@ def render_chart(result: PredictionResult) -> None:
             x=weeks,
             y=raw,
             mode="lines+markers",
-            name="Raw UACR",
+            name="Readings",
             line=dict(color="#94a3b8", width=2, dash="dot"),
             marker=dict(size=8, color="#94a3b8", line=dict(color="#07161b", width=1), symbol="circle"),
             hovertemplate="Week %{x}<br>Raw UACR: %{y:.1f} mg/g<extra></extra>",
@@ -3573,17 +3453,17 @@ def render_chart(result: PredictionResult) -> None:
             x=weeks,
             y=reference,
             mode="lines",
-            name=f"{result.reference.sex_label} healthy P50",
+            name="Healthy reference",
             line=dict(color="#22d3ee", width=3, dash="dash"),
             hovertemplate="Week %{x}<br>Healthy P50: %{y:.1f} mg/g<extra></extra>",
         )
     )
     fig.update_layout(
-        height=440,
+        height=370,
         template="plotly_dark",
         paper_bgcolor="#061419",
         plot_bgcolor="#081a20",
-        margin=dict(l=16, r=16, t=62, b=20),
+        margin=dict(l=12, r=12, t=60, b=12),
         xaxis_title="Week",
         yaxis_title="UACR (mg/g)",
         hovermode="x unified",
@@ -3788,20 +3668,19 @@ def render_result(
         f"""
         <div class="np-result-head">
             <div>
-                <div class="np-section-kicker">Analysis complete</div>
                 <h2>Kidney risk assessment</h2>
-                <p class="np-result-greeting">Hello, <strong>{safe_patient_name}</strong>. Your kidney risk assessment is ready for clinical review.</p>
+                <p class="np-result-greeting">{safe_patient_name}, your result is ready for clinical review.</p>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    left, right = st.columns([0.9, 1.25], gap="large")
+    left, right = st.columns([1.1, 0.9], gap="large")
     with left:
         st.markdown(
             f"""
             <div class="risk-banner" style="background:{surface}; color:{color};">
-                <div class="risk-kicker">Combined risk output</div>
+                <div class="risk-kicker">Estimated kidney risk</div>
                 <div class="risk-score" style="color:{color};">{result.final_percent:.1f}%</div>
                 <div class="risk-level" style="color:{color};">{html.escape(result.risk_level)}</div>
                 <div class="directive">{html.escape(theme["directive"])}</div>
@@ -3809,11 +3688,7 @@ def render_result(
             """,
             unsafe_allow_html=True,
         )
-        pdf_bytes = build_simple_pdf_report(
-            result,
-            inputs,
-            uacr_values,
-        )
+        pdf_bytes = build_simple_pdf_report(result, inputs, uacr_values)
         st.download_button(
             "Download clinical PDF report",
             data=pdf_bytes,
@@ -3823,102 +3698,30 @@ def render_result(
         )
 
     with right:
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Final risk", f"{result.final_percent:.1f}%")
-        c2.metric("Static risk", f"{result.p_xgb * 100.0:.1f}%")
-        c3.metric("Trend risk", f"{result.p_trend * 100.0:.1f}%")
-
-        c4, c5, c6 = st.columns(3)
-        c4.metric("Optimized UACR (mg/g)", f"{result.uacr_processing.uacr_opt:.1f}")
-        c5.metric("Trend slope", f"{result.uacr_processing.beta1:.3f}")
-        c6.metric("LSTM output", f"{result.p_trend_model_raw * 100.0:.1f}%")
-
-        c7, c8 = st.columns(2)
-        c7.metric("Trend weight", f"{result.trend_fusion_weight * 100.0:.0f}%")
-        c8.metric("Max smoothing delta (mg/g)", f"{result.uacr_processing.smoothing_delta_max:.2f}")
-
-        if style_metric_cards is not None:
-            try:
-                style_metric_cards(
-                    background_color="#07181d",
-                    border_color="#173a40",
-                    border_radius_px=18,
-                    border_left_color=color,
-                    box_shadow=False,
-                )
-            except Exception:
-                pass
-
+        static_col, trend_col = st.columns(2)
+        static_col.metric("Clinical profile", f"{result.p_xgb * 100.0:.1f}%")
+        trend_col.metric("12-week trend", f"{result.p_trend * 100.0:.1f}%")
+        st.metric("Latest UACR (mg/g)", f"{uacr_values[-1]:.1f}")
         if result.severity_floor_applied:
             st.warning(result.severity_floor_label)
-        else:
-            st.info(result.severity_floor_label)
-        st.caption(result.trend_probability_note)
-        if result.uacr_processing.smoothing_delta_max < 0.01:
-            st.info(
-                "Savitzky-Golay changed the curve by less than 0.01 mg/g for these inputs; "
-                "raw markers and the smoothed line can overlap."
-            )
 
-    st.markdown("### 12-week UACR trajectory")
+    st.markdown("### 12-week UACR trend")
     direction = "rising" if result.uacr_processing.raw_slope > 0.05 else "falling" if result.uacr_processing.raw_slope < -0.05 else "stable"
-    st.caption(
-        f"The smoothed series is {direction}, with an optimized UACR of "
-        f"{result.uacr_processing.uacr_opt:.1f} mg/g and a {result.uacr_relative_change:.2f}× recent-to-early change."
-    )
+    st.markdown(f"UACR readings are **{direction}** overall.")
     render_chart(result)
 
-    with st.expander("Detailed signal data & model trace"):
-        detail_cols = st.columns([1.25, 0.75], gap="large")
-        with detail_cols[0]:
-            st.markdown("#### Accessible UACR data table")
-            signal_frame = pd.DataFrame(
-                {
-                    "Week": np.arange(1, WEEKS_IN_SERIES + 1),
-                    "Raw UACR (mg/g)": result.uacr_processing.raw,
-                    "Smoothed UACR (mg/g)": result.uacr_processing.smoothed,
-                    "Smoothing delta": result.uacr_processing.smoothing_delta,
-                    "Internal Z": result.uacr_processing.z_scores,
-                    "Optimization weight": result.uacr_processing.weights,
-                }
-            )
-            st.dataframe(signal_frame, width="stretch", hide_index=True)
-        with detail_cols[1]:
-            st.markdown("#### Reference match")
-            st.write(
-                {
-                    "sex": result.reference.sex_label,
-                    "column": result.reference.column_name,
-                    "healthy_p50_mg_g": result.reference.reference_value,
-                }
-            )
-
-        st.markdown(
-            f"""
-            <div class="metric-panel">
-                <b>Dynamic late-fusion trace</b>
-                <div class="small-muted">
-                    Final before floor = sigmoid({META_INTERCEPT:.2f}
-                    + {result.xgb_fusion_weight:.2f} × logit(Pxgb)
-                    + {result.trend_fusion_weight:.2f} × logit(Ptrend))
-                </div>
-                <div class="small-muted">
-                    Fused before floor: {result.fused_probability * 100.0:.2f}% &nbsp;|&nbsp;
-                    UACR change: {result.uacr_relative_change:.2f}× &nbsp;|&nbsp;
-                    LSTM tensor: {result.lstm_tensor_shape} &nbsp;|&nbsp;
-                    Raw LSTM output: {result.p_trend_model_raw * 100.0:.2f}%
-                </div>
-                <div class="small-muted">{html.escape(result.fusion_note)}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+    with st.expander("View weekly UACR readings"):
+        st.dataframe(
+            pd.DataFrame({"Week": np.arange(1, WEEKS_IN_SERIES + 1), "UACR (mg/g)": result.uacr_processing.raw}),
+            width="stretch",
+            hide_index=True,
         )
 
     st.info(
-        "Clinical decision-support only. Interpret this assessment with the complete patient record and local care "
-        "protocols. It is not a diagnosis and must not be used for emergency triage."
+        "Clinical decision support only. Interpret this result with the full patient record and local care protocols. "
+        "It is not a diagnosis or an emergency triage tool."
     )
-    if st.button("Edit assessment inputs", key="edit_completed_assessment"):
+    if st.button("Edit assessment", key="edit_completed_assessment"):
         st.session_state["analysis_result"] = None
         st.session_state["submitted_snapshot"] = None
         st.session_state["review_confirmed"] = False
@@ -3977,10 +3780,6 @@ def main() -> None:
                 render_review_step(bundle)
 
     render_system_diagnostics(bundle)
-    st.markdown(
-        '<div class="np-footer-note">NephroPreempt &bull; Local clinical decision-support &bull; Handle patient identifiers under your privacy policy</div>',
-        unsafe_allow_html=True,
-    )
 
 
 if __name__ == "__main__":
