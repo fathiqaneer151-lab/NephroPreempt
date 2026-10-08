@@ -741,10 +741,10 @@ def configure_page() -> None:
                 font-family: "Noto Sans", "Segoe UI", sans-serif !important;
             }
             div[data-baseweb="select"] svg { fill: var(--np-ocean-700) !important; color: var(--np-ocean-700) !important; }
-            [role="listbox"] { color: var(--np-slate-950) !important; background: #ffffff !important; }
-            [role="option"] { color: var(--np-slate-950) !important; background: #ffffff !important; }
+            [role="listbox"] { color: #f0fdfa !important; background: #10272e !important; }
+            [role="option"] { color: #f0fdfa !important; background: #10272e !important; }
             [role="option"]:hover,
-            [role="option"][aria-selected="true"] { background: #e7f8fb !important; }
+            [role="option"][aria-selected="true"] { background: #17505a !important; }
             [data-testid="stNumberInput"] button {
                 border-color: #d2e3e7 !important;
                 color: var(--np-ocean-800) !important;
@@ -1790,7 +1790,7 @@ def configure_dark_experience() -> None:
             .st-key-question_card_health [role="radiogroup"] label * { color: #effdfa !important; }
             .st-key-question_card_sex [role="radiogroup"] input,
             .st-key-question_card_health [role="radiogroup"] input { accent-color: #2dd4bf !important; }
-            .st-key-question_card_health [data-testid="stNumberInput"] { margin-bottom: 1.25rem; }
+            .st-key-question_card_health [data-testid="stSlider"] { margin-bottom: 1.25rem; }
             .st-key-question_card_health [data-testid="stRadio"] { margin-top: .7rem; }
             [data-testid="stSelectbox"] [data-baseweb="select"] > div {
                 min-height: 50px !important; color: #f0fdfa !important;
@@ -1798,8 +1798,42 @@ def configure_dark_experience() -> None:
             }
             [data-testid="stSelectbox"] [data-baseweb="select"] *,
             [role="listbox"] *, [data-baseweb="popover"] * { color: #f0fdfa !important; }
-            [role="listbox"], [data-baseweb="popover"] { background: #10272e !important; }
+            [role="listbox"], [data-baseweb="popover"],
+            [data-baseweb="popover"] > div { background: #10272e !important; }
+            [data-baseweb="popover"] ul,
+            [data-baseweb="popover"] ul > div {
+                background: #10272e !important;
+            }
+            [data-baseweb="popover"] ::-webkit-scrollbar { width: 8px; }
+            [data-baseweb="popover"] ::-webkit-scrollbar-track { background: #10272e; }
+            [data-baseweb="popover"] ::-webkit-scrollbar-thumb {
+                background: #45666b; border-radius: 8px;
+            }
+            [role="listbox"] [role="option"],
+            [data-baseweb="popover"] [role="option"] {
+                color: #f0fdfa !important; background: #10272e !important;
+                -webkit-text-fill-color: #f0fdfa !important;
+            }
+            [role="listbox"] [role="option"]:hover,
+            [role="listbox"] [role="option"][aria-selected="true"],
+            [data-baseweb="popover"] [role="option"]:hover,
+            [data-baseweb="popover"] [role="option"][aria-selected="true"] {
+                color: #f0fdfa !important; background: #17505a !important;
+            }
             [data-testid="stSelectbox"] [data-baseweb="select"] svg { fill: #bcece4 !important; }
+            [data-testid="InputInstructions"] { display: none !important; }
+            [data-testid="stSelectbox"] [data-baseweb="select"]:focus-within > div,
+            [data-testid="stTextInput"] [data-baseweb="input"]:focus-within,
+            [data-testid="stNumberInput"] [data-baseweb="input"]:focus-within {
+                border-color: #5eead4 !important;
+                box-shadow: 0 0 0 2px rgba(94,234,212,.24) !important;
+            }
+            [data-testid="stSlider"] [data-testid="stSliderThumbValue"],
+            [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] + div,
+            [data-testid="stSlider"] [data-testid="stTickBarMin"],
+            [data-testid="stSlider"] [data-testid="stTickBarMax"] {
+                color: #e7faf6 !important; -webkit-text-fill-color: #e7faf6 !important;
+            }
             [data-testid="stWidgetLabel"] p,
             [data-testid="stSelectbox"] [data-baseweb="select"],
             [data-testid="stSelectbox"] [data-baseweb="select"] div,
@@ -2812,15 +2846,15 @@ WIZARD_DATA_KEYS = (
 def initialize_session_state() -> None:
     defaults: dict[str, Any] = {
         "wizard_step": 1,
-        "wizard_schema_version": 3,
+        "wizard_schema_version": 4,
         "patient_name": "",
         "dob_year": None,
         "dob_month": None,
         "dob_day": None,
         "patient_sex": None,
-        "patient_weight_kg": None,
-        "patient_height_cm": None,
-        "baseline_sbp": None,
+        "patient_weight_kg": 70.0,
+        "patient_height_cm": 170.0,
+        "baseline_sbp": 115,
         "has_diabetes": None,
         "has_hypertension": None,
         "is_smoker": None,
@@ -2846,6 +2880,19 @@ def initialize_session_state() -> None:
             if st.session_state.get(key) == old_default and st.session_state.get("analysis_result") is None:
                 st.session_state[key] = None
 
+    if previous_schema < 4:
+        for key, default, minimum, maximum in (
+            ("patient_weight_kg", 70.0, WEIGHT_MIN, WEIGHT_MAX),
+            ("patient_height_cm", 170.0, HEIGHT_MIN, HEIGHT_MAX),
+            ("baseline_sbp", 115, SBP_MIN, SBP_MAX),
+        ):
+            old_value = st.session_state.get(key)
+            if old_value is None:
+                st.session_state[key] = default
+            else:
+                rounded = np.clip(round(float(old_value)), minimum, maximum)
+                st.session_state[key] = int(rounded) if key == "baseline_sbp" else float(rounded)
+
     # Migrate values from the earlier boolean-based wizard without losing data.
     for key in ("has_diabetes", "has_hypertension", "is_smoker", "uses_acei_arb"):
         if isinstance(st.session_state.get(key), bool):
@@ -2868,7 +2915,7 @@ def initialize_session_state() -> None:
     except (TypeError, ValueError):
         current_step = 1
     st.session_state["wizard_step"] = int(np.clip(current_step, 1, len(WIZARD_STEPS)))
-    st.session_state["wizard_schema_version"] = 3
+    st.session_state["wizard_schema_version"] = 4
 
 
 def invalidate_analysis() -> None:
@@ -3109,33 +3156,28 @@ def render_measurements_step() -> None:
     render_step_heading(
         "Profile / Question 03",
         "Add height and weight",
-        "Enter the two body measurements together. Derived model values stay hidden during the assessment.",
     )
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_measurements"):
 
         height_col, weight_col = st.columns(2, gap="large")
         with height_col:
-            st.number_input(
+            st.slider(
                 "Height (cm)",
                 min_value=HEIGHT_MIN,
                 max_value=HEIGHT_MAX,
-                step=0.1,
-                format="%.1f",
-                value=None,
-                placeholder="Enter height",
+                step=1.0,
+                format="%.0f",
                 key="patient_height_cm",
                 on_change=invalidate_analysis,
             )
         with weight_col:
-            st.number_input(
+            st.slider(
                 "Weight (kg)",
                 min_value=WEIGHT_MIN,
                 max_value=WEIGHT_MAX,
-                step=0.1,
-                format="%.1f",
-                value=None,
-                placeholder="Enter weight",
+                step=1.0,
+                format="%.0f",
                 key="patient_weight_kg",
                 on_change=invalidate_analysis,
             )
@@ -3176,9 +3218,9 @@ def render_health_step() -> None:
     render_step_heading("Health / Question 05", "Health and treatment details")
     render_error_summary(list(st.session_state.get("step_errors", [])))
     with st.container(border=True, key="question_card_health"):
-        st.number_input(
+        st.slider(
             "Systolic blood pressure (mmHg)", min_value=SBP_MIN, max_value=SBP_MAX,
-            value=None, step=1, placeholder="Enter systolic pressure",
+            step=1,
             key="baseline_sbp", on_change=invalidate_analysis,
         )
         for label, key in (
